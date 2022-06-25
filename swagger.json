@@ -1,0 +1,2852 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "corp-perestroika-api",
+    "description": "corp-perestroika-api",
+    "version": "0.1.2"
+  },
+  "servers": [
+    {
+      "url": "http://corpint6/corp-perestroika-{api}/rest",
+      "variables": {
+        "api": {
+          "default": "escrow-api",
+          "enum": [
+            "depositor-api",
+            "buildproject-api",
+            "escrow-api",
+            "amsign-api"
+          ]
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/escrow-order/{reference}": {
+      "get": {
+        "tags": [
+          "escrowOrder"
+        ],
+        "description": "Вернуть эскроу заявку",
+        "operationId": "get",
+        "parameters": [
+          {
+            "name": "A-userId",
+            "in": "header",
+            "description": "Идентификатор инициатора запроса (УЛ)",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "pattern": "^(.{6}|.{9})$",
+              "type": "string",
+              "nullable": false
+            },
+            "example": "XAAAAA"
+          },
+          {
+            "name": "A-userIp",
+            "in": "header",
+            "description": "Идентификатор приложения инициатора запроса",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "64.233.165.113"
+          },
+          {
+            "name": "A-customerId",
+            "in": "header",
+            "description": "Идентификатор клиента инициатора запроса (УЛ)",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "pattern": "^(.{6}|.{9})$",
+              "type": "string",
+              "nullable": false
+            },
+            "example": "UAAAAA"
+          },
+          {
+            "name": "A-projectId",
+            "in": "header",
+            "description": "Идентификатор приложения инициатора запроса",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "DASHBOARD"
+          },
+          {
+            "name": "A-clientType",
+            "in": "header",
+            "description": "Тип сервиса инициатора запроса",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "FRONT"
+          },
+          {
+            "name": "A-channelId",
+            "in": "header",
+            "description": "Идентификатор вызывающей системы (канала) NIB|ABM|BAAS",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "NIB"
+          },
+          {
+            "name": "reference",
+            "in": "path",
+            "description": "Eq ссылка на заявку",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EscrowOrder"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Неверные входные параметры запроса",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Доступ запрещен",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Ресурс не найден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Внутренняя ошибка сервиса",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "escrowOrder"
+        ],
+        "description": "Вернуть эскроу заявку",
+        "operationId": "update",
+        "parameters": [
+          {
+            "name": "A-userId",
+            "in": "header",
+            "description": "Идентификатор инициатора запроса (УЛ)",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "pattern": "^(.{6}|.{9})$",
+              "type": "string",
+              "nullable": false
+            },
+            "example": "XAAAAA"
+          },
+          {
+            "name": "A-userIp",
+            "in": "header",
+            "description": "Идентификатор приложения инициатора запроса",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "64.233.165.113"
+          },
+          {
+            "name": "A-customerId",
+            "in": "header",
+            "description": "Идентификатор клиента инициатора запроса (УЛ)",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "pattern": "^(.{6}|.{9})$",
+              "type": "string",
+              "nullable": false
+            },
+            "example": "UAAAAA"
+          },
+          {
+            "name": "A-projectId",
+            "in": "header",
+            "description": "Идентификатор приложения инициатора запроса",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "DASHBOARD"
+          },
+          {
+            "name": "A-clientType",
+            "in": "header",
+            "description": "Тип сервиса инициатора запроса",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "FRONT"
+          },
+          {
+            "name": "A-channelId",
+            "in": "header",
+            "description": "Идентификатор вызывающей системы (канала) NIB|ABM|BAAS",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "NIB"
+          },
+          {
+            "name": "reference",
+            "in": "path",
+            "description": "Eq ссылка на заявку",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EscrowOrder"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Updated",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "nullable": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Неверные входные параметры запроса",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Доступ запрещен",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Ресурс не найден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Внутренняя ошибка сервиса",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/escrow-order/{reference}/conduct": {
+      "put": {
+        "tags": [
+          "escrowOrder"
+        ],
+        "description": "Обработка эскроу заявки",
+        "operationId": "conduct",
+        "parameters": [
+          {
+            "name": "A-userId",
+            "in": "header",
+            "description": "Идентификатор инициатора запроса (УЛ)",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "pattern": "^(.{6}|.{9})$",
+              "type": "string",
+              "nullable": false
+            },
+            "example": "XAAAAA"
+          },
+          {
+            "name": "A-userIp",
+            "in": "header",
+            "description": "Идентификатор приложения инициатора запроса",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "64.233.165.113"
+          },
+          {
+            "name": "A-customerId",
+            "in": "header",
+            "description": "Идентификатор клиента инициатора запроса (УЛ)",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "pattern": "^(.{6}|.{9})$",
+              "type": "string",
+              "nullable": false
+            },
+            "example": "UAAAAA"
+          },
+          {
+            "name": "A-projectId",
+            "in": "header",
+            "description": "Идентификатор приложения инициатора запроса",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "DASHBOARD"
+          },
+          {
+            "name": "A-clientType",
+            "in": "header",
+            "description": "Тип сервиса инициатора запроса",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "FRONT"
+          },
+          {
+            "name": "A-channelId",
+            "in": "header",
+            "description": "Идентификатор вызывающей системы (канала) NIB|ABM|BAAS",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "NIB"
+          },
+          {
+            "name": "reference",
+            "in": "path",
+            "description": "Eq ссылка на заявку",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EscrowOrder"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Обработка запущенна"
+          },
+          "400": {
+            "description": "Неверные входные параметры запроса",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Доступ запрещен",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Ресурс не найден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Внутренняя ошибка сервиса",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/escrow-order/find": {
+      "post": {
+        "tags": [
+          "escrowOrder"
+        ],
+        "description": "Поиск по фильтру эскроу заявок",
+        "operationId": "findOrders",
+        "parameters": [
+          {
+            "name": "A-userId",
+            "in": "header",
+            "description": "Идентификатор инициатора запроса (УЛ)",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "pattern": "^(.{6}|.{9})$",
+              "type": "string",
+              "nullable": false
+            },
+            "example": "XAAAAA"
+          },
+          {
+            "name": "A-userIp",
+            "in": "header",
+            "description": "Идентификатор приложения инициатора запроса",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "64.233.165.113"
+          },
+          {
+            "name": "A-customerId",
+            "in": "header",
+            "description": "Идентификатор клиента инициатора запроса (УЛ)",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "pattern": "^(.{6}|.{9})$",
+              "type": "string",
+              "nullable": false
+            },
+            "example": "UAAAAA"
+          },
+          {
+            "name": "A-projectId",
+            "in": "header",
+            "description": "Идентификатор приложения инициатора запроса",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "DASHBOARD"
+          },
+          {
+            "name": "A-clientType",
+            "in": "header",
+            "description": "Тип сервиса инициатора запроса",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "FRONT"
+          },
+          {
+            "name": "A-channelId",
+            "in": "header",
+            "description": "Идентификатор вызывающей системы (канала) NIB|ABM|BAAS",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "NIB"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EscrowOrderFilter"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EscrowOrder"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Неверные входные параметры запроса",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Доступ запрещен",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Ресурс не найден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Внутренняя ошибка сервиса",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depositor": {
+      "get": {
+        "tags": [
+          "depositor"
+        ],
+        "description": "Поиск клиента по полному имени и дате рождения",
+        "operationId": "getClient",
+        "parameters": [
+          {
+            "name": "A-userId",
+            "in": "header",
+            "description": "Идентификатор инициатора запроса (УЛ)",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "pattern": "^(.{6}|.{9})$",
+              "type": "string",
+              "nullable": false
+            },
+            "example": "XAAAAA"
+          },
+          {
+            "name": "A-userIp",
+            "in": "header",
+            "description": "Идентификатор приложения инициатора запроса",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "64.233.165.113"
+          },
+          {
+            "name": "A-customerId",
+            "in": "header",
+            "description": "Идентификатор клиента инициатора запроса (УЛ)",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "pattern": "^(.{6}|.{9})$",
+              "type": "string",
+              "nullable": false
+            },
+            "example": "UAAAAA"
+          },
+          {
+            "name": "A-projectId",
+            "in": "header",
+            "description": "Идентификатор приложения инициатора запроса",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "DASHBOARD"
+          },
+          {
+            "name": "A-clientType",
+            "in": "header",
+            "description": "Тип сервиса инициатора запроса",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "FRONT"
+          },
+          {
+            "name": "A-channelId",
+            "in": "header",
+            "description": "Идентификатор вызывающей системы (канала) NIB|ABM|BAAS",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "NIB"
+          },
+          {
+            "name": "fullName",
+            "in": "query",
+            "description": "Полное имя клиента",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          {
+            "name": "birthDate",
+            "in": "query",
+            "description": "Дата рождения клиента",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "idNumber",
+            "in": "query",
+            "description": "Серия и номер паспорта",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "pattern": "^(\\d{4}\\s\\d{6}|\\d{2}\\s\\d{7})$",
+              "type": "string"
+            },
+            "examples": {
+              "internal": {
+                "value": "1234 123456"
+              },
+              "international": {
+                "value": "12 1234567"
+              }
+            }
+          },
+          {
+            "name": "idType",
+            "in": "query",
+            "description": "Тип ДУЛа",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          {
+            "name": "idIssuedDate",
+            "in": "query",
+            "description": "Дата выдачи ДУЛа",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cus"
+                },
+                "example": "XAAAAA"
+              }
+            }
+          },
+          "204": {
+            "description": "Не найденно ни одной записи"
+          },
+          "400": {
+            "description": "Неверные входные параметры запроса",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Доступ запрещен",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Ресурс не найден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Неверные входные параметры запроса",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Внутренняя ошибка сервиса",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depositor/simpleRequest": {
+      "post": {
+        "tags": [
+          "depositor"
+        ],
+        "description": "Создание заявки в расчетном конвеере",
+        "operationId": "createSimpleRequest",
+        "parameters": [
+          {
+            "name": "A-userId",
+            "in": "header",
+            "description": "Идентификатор инициатора запроса (УЛ)",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "pattern": "^(.{6}|.{9})$",
+              "type": "string",
+              "nullable": false
+            },
+            "example": "XAAAAA"
+          },
+          {
+            "name": "A-userIp",
+            "in": "header",
+            "description": "Идентификатор приложения инициатора запроса",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "64.233.165.113"
+          },
+          {
+            "name": "A-customerId",
+            "in": "header",
+            "description": "Идентификатор клиента инициатора запроса (УЛ)",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "pattern": "^(.{6}|.{9})$",
+              "type": "string",
+              "nullable": false
+            },
+            "example": "UAAAAA"
+          },
+          {
+            "name": "A-projectId",
+            "in": "header",
+            "description": "Идентификатор приложения инициатора запроса",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "DASHBOARD"
+          },
+          {
+            "name": "A-clientType",
+            "in": "header",
+            "description": "Тип сервиса инициатора запроса",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "FRONT"
+          },
+          {
+            "name": "A-channelId",
+            "in": "header",
+            "description": "Идентификатор вызывающей системы (канала) NIB|ABM|BAAS",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "NIB"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSimpleRequestContext"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "nullable": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Неверные входные параметры запроса",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Доступ запрещен",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Ресурс не найден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Внутренняя ошибка сервиса",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depositor/simpleRequest/{requestId}/process": {
+      "post": {
+        "tags": [
+          "depositor"
+        ],
+        "description": "Старт процесса обработки файлов депозитора расчетным конвеером",
+        "operationId": "processSimpleRequest",
+        "parameters": [
+          {
+            "name": "A-userId",
+            "in": "header",
+            "description": "Идентификатор инициатора запроса (УЛ)",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "pattern": "^(.{6}|.{9})$",
+              "type": "string",
+              "nullable": false
+            },
+            "example": "XAAAAA"
+          },
+          {
+            "name": "A-userIp",
+            "in": "header",
+            "description": "Идентификатор приложения инициатора запроса",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "64.233.165.113"
+          },
+          {
+            "name": "A-customerId",
+            "in": "header",
+            "description": "Идентификатор клиента инициатора запроса (УЛ)",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "pattern": "^(.{6}|.{9})$",
+              "type": "string",
+              "nullable": false
+            },
+            "example": "UAAAAA"
+          },
+          {
+            "name": "A-projectId",
+            "in": "header",
+            "description": "Идентификатор приложения инициатора запроса",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "DASHBOARD"
+          },
+          {
+            "name": "A-clientType",
+            "in": "header",
+            "description": "Тип сервиса инициатора запроса",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "FRONT"
+          },
+          {
+            "name": "A-channelId",
+            "in": "header",
+            "description": "Идентификатор вызывающей системы (канала) NIB|ABM|BAAS",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "NIB"
+          },
+          {
+            "name": "requestId",
+            "in": "path",
+            "description": "id запроса",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Неверные входные параметры запроса",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Доступ запрещен",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Ресурс не найден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Внутренняя ошибка сервиса",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/depositor/file": {
+      "post": {
+        "tags": [
+          "depositor"
+        ],
+        "description": "Отправка файла в ЭА",
+        "operationId": "attachFile",
+        "parameters": [
+          {
+            "name": "A-userId",
+            "in": "header",
+            "description": "Идентификатор инициатора запроса (УЛ)",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "pattern": "^(.{6}|.{9})$",
+              "type": "string",
+              "nullable": false
+            },
+            "example": "XAAAAA"
+          },
+          {
+            "name": "A-userIp",
+            "in": "header",
+            "description": "Идентификатор приложения инициатора запроса",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "64.233.165.113"
+          },
+          {
+            "name": "A-customerId",
+            "in": "header",
+            "description": "Идентификатор клиента инициатора запроса (УЛ)",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "pattern": "^(.{6}|.{9})$",
+              "type": "string",
+              "nullable": false
+            },
+            "example": "UAAAAA"
+          },
+          {
+            "name": "A-projectId",
+            "in": "header",
+            "description": "Идентификатор приложения инициатора запроса",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "DASHBOARD"
+          },
+          {
+            "name": "A-clientType",
+            "in": "header",
+            "description": "Тип сервиса инициатора запроса",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "FRONT"
+          },
+          {
+            "name": "A-channelId",
+            "in": "header",
+            "description": "Идентификатор вызывающей системы (канала) NIB|ABM|BAAS",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "NIB"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentInformation"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "nullable": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Неверные входные параметры запроса",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Доступ запрещен",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Ресурс не найден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Внутренняя ошибка сервиса",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/buildprojects/{developer}": {
+      "get": {
+        "tags": [
+          "buildproject"
+        ],
+        "description": "Вернуть проекты строительства застройщика",
+        "operationId": "getDeveloperBuildProjects",
+        "parameters": [
+          {
+            "name": "A-userId",
+            "in": "header",
+            "description": "Идентификатор инициатора запроса (УЛ)",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "pattern": "^(.{6}|.{9})$",
+              "type": "string",
+              "nullable": false
+            },
+            "example": "XAAAAA"
+          },
+          {
+            "name": "A-userIp",
+            "in": "header",
+            "description": "Идентификатор приложения инициатора запроса",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "64.233.165.113"
+          },
+          {
+            "name": "A-customerId",
+            "in": "header",
+            "description": "Идентификатор клиента инициатора запроса (УЛ)",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "pattern": "^(.{6}|.{9})$",
+              "type": "string",
+              "nullable": false
+            },
+            "example": "UAAAAA"
+          },
+          {
+            "name": "A-projectId",
+            "in": "header",
+            "description": "Идентификатор приложения инициатора запроса",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "DASHBOARD"
+          },
+          {
+            "name": "A-clientType",
+            "in": "header",
+            "description": "Тип сервиса инициатора запроса",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "FRONT"
+          },
+          {
+            "name": "A-channelId",
+            "in": "header",
+            "description": "Идентификатор вызывающей системы (канала) NIB|ABM|BAAS",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "NIB"
+          },
+          {
+            "name": "developer",
+            "in": "path",
+            "description": "Cus застройщика",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "$ref": "#/components/schemas/Cus"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Проекты",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BuildProject"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Неверные входные параметры запроса",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Доступ запрещен",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Ресурс не найден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Внутренняя ошибка сервиса",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/deponent/accounts": {
+      "get": {
+        "tags": [
+          "AmsignDeponentInfoController"
+        ],
+        "description": "Вернуть активные счета депонента",
+        "operationId": "getActiveAccounts",
+        "parameters": [
+          {
+            "name": "A-userId",
+            "in": "header",
+            "description": "Идентификатор инициатора запроса (УЛ)",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "pattern": "^(.{6}|.{9})$",
+              "type": "string",
+              "nullable": false
+            },
+            "example": "XAAAAA"
+          },
+          {
+            "name": "A-userIp",
+            "in": "header",
+            "description": "Идентификатор приложения инициатора запроса",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "64.233.165.113"
+          },
+          {
+            "name": "A-customerId",
+            "in": "header",
+            "description": "Идентификатор клиента инициатора запроса (УЛ)",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "pattern": "^(.{6}|.{9})$",
+              "type": "string",
+              "nullable": false
+            },
+            "example": "UAAAAA"
+          },
+          {
+            "name": "A-projectId",
+            "in": "header",
+            "description": "Идентификатор приложения инициатора запроса",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "DASHBOARD"
+          },
+          {
+            "name": "A-clientType",
+            "in": "header",
+            "description": "Тип сервиса инициатора запроса",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "FRONT"
+          },
+          {
+            "name": "A-channelId",
+            "in": "header",
+            "description": "Идентификатор вызывающей системы (канала) NIB|ABM|BAAS",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "NIB"
+          },
+          {
+            "name": "AUTH-USER-ID",
+            "in": "header",
+            "description": "Cus депонента",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "$ref": "#/components/schemas/Cus"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Список активных счетов депонента",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Account"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Неверные входные параметры запроса",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Доступ запрещен",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Ресурс не найден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Внутренняя ошибка сервиса",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/deponent/account/validate": {
+      "post": {
+        "tags": [
+          "AmsignDeponentInfoController"
+        ],
+        "description": "Проверка счета внешнего банка",
+        "operationId": "validateExternalAccount",
+        "parameters": [
+          {
+            "name": "A-userId",
+            "in": "header",
+            "description": "Идентификатор инициатора запроса (УЛ)",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "pattern": "^(.{6}|.{9})$",
+              "type": "string",
+              "nullable": false
+            },
+            "example": "XAAAAA"
+          },
+          {
+            "name": "A-userIp",
+            "in": "header",
+            "description": "Идентификатор приложения инициатора запроса",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "64.233.165.113"
+          },
+          {
+            "name": "A-customerId",
+            "in": "header",
+            "description": "Идентификатор клиента инициатора запроса (УЛ)",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "pattern": "^(.{6}|.{9})$",
+              "type": "string",
+              "nullable": false
+            },
+            "example": "UAAAAA"
+          },
+          {
+            "name": "A-projectId",
+            "in": "header",
+            "description": "Идентификатор приложения инициатора запроса",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "DASHBOARD"
+          },
+          {
+            "name": "A-clientType",
+            "in": "header",
+            "description": "Тип сервиса инициатора запроса",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "FRONT"
+          },
+          {
+            "name": "A-channelId",
+            "in": "header",
+            "description": "Идентификатор вызывающей системы (канала) NIB|ABM|BAAS",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "NIB"
+          },
+          {
+            "name": "AUTH-USER-ID",
+            "in": "header",
+            "description": "Cus депонента",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "$ref": "#/components/schemas/Cus"
+            }
+          },
+          {
+            "name": "accountNumber",
+            "in": "query",
+            "description": "Номер счета",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "$ref": "#/components/schemas/AccountNumber"
+            }
+          },
+          {
+            "name": "bic",
+            "in": "query",
+            "description": "Бик банка",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Проверка пройдена"
+          },
+          "400": {
+            "description": "Неверные входные параметры запроса",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Доступ запрещен",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Ресурс не найден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Внутренняя ошибка сервиса",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/deponent/account/buh/validate": {
+      "post": {
+        "tags": [
+          "AmsignDeponentInfoController"
+        ],
+        "description": "Проверка бух режима счета",
+        "operationId": "validateAccountBuhType",
+        "parameters": [
+          {
+            "name": "A-userId",
+            "in": "header",
+            "description": "Идентификатор инициатора запроса (УЛ)",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "pattern": "^(.{6}|.{9})$",
+              "type": "string",
+              "nullable": false
+            },
+            "example": "XAAAAA"
+          },
+          {
+            "name": "A-userIp",
+            "in": "header",
+            "description": "Идентификатор приложения инициатора запроса",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "64.233.165.113"
+          },
+          {
+            "name": "A-customerId",
+            "in": "header",
+            "description": "Идентификатор клиента инициатора запроса (УЛ)",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "pattern": "^(.{6}|.{9})$",
+              "type": "string",
+              "nullable": false
+            },
+            "example": "UAAAAA"
+          },
+          {
+            "name": "A-projectId",
+            "in": "header",
+            "description": "Идентификатор приложения инициатора запроса",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "DASHBOARD"
+          },
+          {
+            "name": "A-clientType",
+            "in": "header",
+            "description": "Тип сервиса инициатора запроса",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "FRONT"
+          },
+          {
+            "name": "A-channelId",
+            "in": "header",
+            "description": "Идентификатор вызывающей системы (канала) NIB|ABM|BAAS",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "NIB"
+          },
+          {
+            "name": "AUTH-USER-ID",
+            "in": "header",
+            "description": "Cus депонента",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "$ref": "#/components/schemas/Cus"
+            }
+          },
+          {
+            "name": "accountNumber",
+            "in": "query",
+            "description": "Номер счета",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "$ref": "#/components/schemas/AccountNumber"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Проверка пройдена"
+          },
+          "400": {
+            "description": "Неверные входные параметры запроса",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Доступ запрещен",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Ресурс не найден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Внутренняя ошибка сервиса",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/deponent/compliance": {
+      "post": {
+        "tags": [
+          "AmsignDeponentInfoController"
+        ],
+        "description": "Комплаенс проверка депонента",
+        "operationId": "checkCompliance",
+        "parameters": [
+          {
+            "name": "A-userId",
+            "in": "header",
+            "description": "Идентификатор инициатора запроса (УЛ)",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "pattern": "^(.{6}|.{9})$",
+              "type": "string",
+              "nullable": false
+            },
+            "example": "XAAAAA"
+          },
+          {
+            "name": "A-userIp",
+            "in": "header",
+            "description": "Идентификатор приложения инициатора запроса",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "64.233.165.113"
+          },
+          {
+            "name": "A-customerId",
+            "in": "header",
+            "description": "Идентификатор клиента инициатора запроса (УЛ)",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "pattern": "^(.{6}|.{9})$",
+              "type": "string",
+              "nullable": false
+            },
+            "example": "UAAAAA"
+          },
+          {
+            "name": "A-projectId",
+            "in": "header",
+            "description": "Идентификатор приложения инициатора запроса",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "DASHBOARD"
+          },
+          {
+            "name": "A-clientType",
+            "in": "header",
+            "description": "Тип сервиса инициатора запроса",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "FRONT"
+          },
+          {
+            "name": "A-channelId",
+            "in": "header",
+            "description": "Идентификатор вызывающей системы (канала) NIB|ABM|BAAS",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            },
+            "example": "NIB"
+          },
+          {
+            "name": "AUTH-USER-ID",
+            "in": "header",
+            "description": "Cus депонента",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "$ref": "#/components/schemas/Cus"
+            }
+          },
+          {
+            "name": "idType",
+            "in": "query",
+            "description": "Тип ДУЛ депонента",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "001",
+                "002"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Проверка пройдена"
+          },
+          "400": {
+            "description": "Неверные входные параметры запроса",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Доступ запрещен",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Ресурс не найден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Внутренняя ошибка сервиса",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ErrorInfo": {
+        "title": "ResponseError",
+        "required": [
+          "internalMessage",
+          "source",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string",
+            "description": "Источник ошибки",
+            "enum": [
+              "CLIENT",
+              "SERVER"
+            ]
+          },
+          "type": {
+            "type": "string",
+            "description": "Тип ошибки",
+            "example": "AuthenticationError"
+          },
+          "code": {
+            "type": "string",
+            "description": "Код ошибки",
+            "example": "TokenExpired"
+          },
+          "internalMessage": {
+            "type": "string",
+            "description": "Внутренний текст ошибки (не предназначен для отображения клиенту)"
+          },
+          "details": {
+            "type": "array",
+            "description": "Дополнительная информация об ошибке",
+            "items": {
+              "$ref": "#/components/schemas/ErrorInfo_details"
+            }
+          },
+          "meta": {
+            "$ref": "#/components/schemas/ErrorInfo_meta"
+          }
+        }
+      },
+      "Amount": {
+        "title": "Amount",
+        "required": [
+          "amount",
+          "currency"
+        ],
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "currency": {
+            "$ref": "#/components/schemas/Amount_currency"
+          }
+        }
+      },
+      "DocumentInformation": {
+        "title": "DocumentInformation",
+        "type": "object",
+        "properties": {
+          "requestId": {
+            "type": "string",
+            "description": "Id заявки в расчетном конвеере"
+          },
+          "managerCus": {
+            "$ref": "#/components/schemas/Cus"
+          },
+          "developerCus": {
+            "$ref": "#/components/schemas/Cus"
+          },
+          "documentType": {
+            "type": "string",
+            "description": "Тип документа"
+          },
+          "eqReference": {
+            "type": "string",
+            "description": "Ссылка на заявку в eq"
+          },
+          "developerName": {
+            "type": "string",
+            "description": "Застройщик"
+          },
+          "depositorFullName": {
+            "type": "string",
+            "description": "Полное имя клиента"
+          },
+          "buildProjectNumber": {
+            "type": "string",
+            "description": "Номер РНС (разрешение на строительство)"
+          },
+          "orderCreationDate": {
+            "type": "string",
+            "description": "Дата заведения заявки",
+            "format": "date"
+          },
+          "fileName": {
+            "type": "string",
+            "description": "Имя файла"
+          },
+          "content": {
+            "type": "string",
+            "description": "Контент",
+            "format": "byte"
+          }
+        }
+      },
+      "EscrowOrder": {
+        "title": "EscrowOrder",
+        "type": "object",
+        "properties": {
+          "eqRef": {
+            "type": "string",
+            "description": "Референс заявки"
+          },
+          "termEscrowOrder": {
+            "type": "string",
+            "description": "Срок условного депонирования",
+            "format": "date"
+          },
+          "rejectReason": {
+            "type": "string",
+            "description": "Причина отказа"
+          },
+          "orderExecutedDate": {
+            "type": "string",
+            "description": "Дата исполнения заявки",
+            "format": "date"
+          },
+          "creationDate": {
+            "type": "string",
+            "description": "Дата заведения заявки",
+            "format": "date"
+          },
+          "status": {
+            "$ref": "#/components/schemas/OrderStatus"
+          },
+          "developer": {
+            "$ref": "#/components/schemas/Developer"
+          },
+          "escrowAccount": {
+            "$ref": "#/components/schemas/EscrowAccount"
+          },
+          "depositor": {
+            "$ref": "#/components/schemas/Depositor"
+          },
+          "equalityAgreement": {
+            "$ref": "#/components/schemas/EqualityAgreement"
+          },
+          "estateObject": {
+            "$ref": "#/components/schemas/EstateObject"
+          },
+          "refundAccountInfo": {
+            "$ref": "#/components/schemas/RefundAccount"
+          },
+          "trustee": {
+            "$ref": "#/components/schemas/Trustee"
+          }
+        }
+      },
+      "Developer": {
+        "title": "Developer",
+        "type": "object",
+        "properties": {
+          "developerCus": {
+            "$ref": "#/components/schemas/Cus"
+          },
+          "managerCus": {
+            "$ref": "#/components/schemas/Cus"
+          },
+          "accountNumber": {
+            "$ref": "#/components/schemas/AccountNumber"
+          },
+          "developerName": {
+            "type": "string",
+            "description": "Наименование застройщика"
+          },
+          "inn": {
+            "pattern": "^(\\d{10}|\\d{12})$",
+            "type": "string",
+            "description": "ИНН застройщика"
+          }
+        }
+      },
+      "EscrowAccount": {
+        "title": "EscrowAccount",
+        "type": "object",
+        "properties": {
+          "amount": {
+            "$ref": "#/components/schemas/Amount"
+          },
+          "openDate": {
+            "type": "string",
+            "description": "Дата открытия эскроу-счета",
+            "format": "date"
+          },
+          "accountNumber": {
+            "$ref": "#/components/schemas/AccountNumber"
+          }
+        }
+      },
+      "Depositor": {
+        "title": "Depositor",
+        "type": "object",
+        "properties": {
+          "cus": {
+            "type": "string",
+            "description": "Пин Депонента"
+          },
+          "fullName": {
+            "type": "string",
+            "description": "ФИО Депонента"
+          },
+          "birthDate": {
+            "type": "string",
+            "description": "День рождения депонента",
+            "format": "date"
+          },
+          "serialID": {
+            "pattern": "^(\\d{2}|\\d{4})$",
+            "type": "string",
+            "description": "Серия ДУЛ депонента"
+          },
+          "numberID": {
+            "pattern": "^(\\d{6}|\\d{7})$",
+            "type": "string",
+            "description": "Номер ДУЛ депонента"
+          },
+          "typeID": {
+            "type": "string",
+            "description": "Тип ДУЛа",
+            "enum": [
+              "001",
+              "002"
+            ]
+          },
+          "citizenship": {
+            "type": "string",
+            "description": "Гражданство депонента"
+          },
+          "phoneNumber": {
+            "type": "string",
+            "description": "Номер телефона депонента"
+          },
+          "idIssuedDate": {
+            "type": "string",
+            "description": "Дата выдачи ДУЛ депонента",
+            "format": "date"
+          },
+          "depositorOrderRef": {
+            "type": "string",
+            "description": "Ссылка на заявку депонента"
+          },
+          "isDepositorTrustee": {
+            "type": "boolean",
+            "description": "Счет открывает доверенное лицо?"
+          }
+        }
+      },
+      "EqualityAgreement": {
+        "title": "EqualityAgreement",
+        "type": "object",
+        "properties": {
+          "number": {
+            "type": "string",
+            "description": "Номер Договора Долевого Участия"
+          },
+          "date": {
+            "type": "string",
+            "description": "Дата ДДУ",
+            "format": "date"
+          },
+          "isRegistered": {
+            "type": "boolean",
+            "description": "ДДУ зарегистрирован"
+          }
+        }
+      },
+      "EstateObject": {
+        "title": "EstateObject",
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Тип объекта недвижимости"
+          },
+          "apartmentNumber": {
+            "type": "string",
+            "description": "Номер квартиры"
+          },
+          "buildProject": {
+            "$ref": "#/components/schemas/BuildProject"
+          }
+        }
+      },
+      "RefundAccount": {
+        "title": "RefundAccount",
+        "type": "object",
+        "properties": {
+          "accountNumber": {
+            "$ref": "#/components/schemas/AccountNumber"
+          },
+          "bic": {
+            "type": "string"
+          }
+        }
+      },
+      "Trustee": {
+        "title": "Trustee",
+        "type": "object",
+        "properties": {
+          "fullName": {
+            "type": "string",
+            "description": "ФИО доверенного лица"
+          },
+          "birthDate": {
+            "type": "string",
+            "description": "День рождения доверенного лица",
+            "format": "date"
+          },
+          "serialID": {
+            "pattern": "^(\\d{2}|\\d{4})$",
+            "type": "string",
+            "description": "Серия ДУЛ доверенного лица"
+          },
+          "numberID": {
+            "pattern": "^(\\d{6}|\\d{7})$",
+            "type": "string",
+            "description": "Номер ДУЛ доверенного лица"
+          },
+          "trusteeCus": {
+            "$ref": "#/components/schemas/Cus"
+          }
+        }
+      },
+      "BuildProject": {
+        "title": "BuildProject",
+        "type": "object",
+        "properties": {
+          "buildingPermitNumber": {
+            "type": "string",
+            "description": "Номер РНС (разрешение на строительство)"
+          },
+          "regionCode": {
+            "type": "string",
+            "description": "Код региона"
+          },
+          "regionType": {
+            "type": "string",
+            "description": "Тип региона"
+          },
+          "projectNumber": {
+            "type": "string",
+            "description": "Номер проекта строительства"
+          },
+          "districtType": {
+            "type": "string",
+            "description": "Тип населенного пункта"
+          },
+          "districtName": {
+            "type": "string",
+            "description": "Имя населенного пункта"
+          },
+          "commercialName": {
+            "type": "string",
+            "description": "Коммерческое обозначение объекта"
+          },
+          "city": {
+            "type": "string",
+            "description": "Город"
+          },
+          "areaName": {
+            "type": "string",
+            "description": "Наименование района"
+          },
+          "countryCode": {
+            "type": "string",
+            "description": "Код страны"
+          },
+          "beneficiaryAccount": {
+            "type": "string",
+            "description": "Номер счета бенефициара"
+          },
+          "buildingPermitDate": {
+            "type": "string",
+            "description": "Дата РНС",
+            "format": "date"
+          },
+          "phases": {
+            "type": "array",
+            "description": "Этапы строительства",
+            "items": {
+              "$ref": "#/components/schemas/BuildProjectPhase"
+            }
+          }
+        }
+      },
+      "BuildProjectPhase": {
+        "title": "BuildProjectPhase",
+        "type": "object",
+        "properties": {
+          "index": {
+            "type": "integer",
+            "description": "Порядковый номер этапа строительства в пределах проекта"
+          },
+          "name": {
+            "type": "string",
+            "description": "Краткое имя этапа строительства"
+          },
+          "streetType": {
+            "type": "string",
+            "description": "Тип улицы"
+          },
+          "street": {
+            "type": "string",
+            "description": "Улица объекта недвижимости"
+          },
+          "buildingNumber": {
+            "type": "string",
+            "description": "Номер дома объекта недвижимости"
+          },
+          "facilityNumber": {
+            "type": "string",
+            "description": "Номер строения\\корпуса"
+          },
+          "termEscrowOrder": {
+            "type": "string",
+            "description": "Срок учета и блокирования депонированной суммы на счете эскроу по ДДУ",
+            "format": "date"
+          }
+        }
+      },
+      "EscrowOrderFilter": {
+        "title": "EscrowOrderFilter",
+        "type": "object",
+        "properties": {
+          "customerId": {
+            "$ref": "#/components/schemas/Cus"
+          },
+          "period": {
+            "$ref": "#/components/schemas/EscrowOrderFilter_period"
+          },
+          "statuses": {
+            "type": "array",
+            "description": "Фильтр по статусам",
+            "items": {
+              "$ref": "#/components/schemas/OrderStatus"
+            }
+          },
+          "orderType": {
+            "type": "string",
+            "description": "Тип заявки",
+            "enum": [
+              "ea1",
+              "ea2"
+            ]
+          }
+        }
+      },
+      "Account": {
+        "title": "Account",
+        "required": [
+          "accountNumber"
+        ],
+        "type": "object",
+        "properties": {
+          "accountNumber": {
+            "type": "string"
+          },
+          "accountName": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "accountType": {
+            "type": "string"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "buhType": {
+            "type": "string"
+          },
+          "accountingGroup": {
+            "type": "string"
+          }
+        }
+      },
+      "Cus": {
+        "pattern": "^(.{6}|.{9})$",
+        "type": "string",
+        "nullable": false,
+        "example": "XAAAAA,XBBBBB,XCCCCC"
+      },
+      "AccountNumber": {
+        "maxLength": 20,
+        "minLength": 20,
+        "type": "string",
+        "nullable": false
+      },
+      "OrderStatus": {
+        "type": "string",
+        "enum": [
+          "DRAFT",
+          "DELETED",
+          "VERIFICATION",
+          "CLIENT_CANCELLED",
+          "SIGNING",
+          "WAITING_DDU",
+          "EXECUTED",
+          "VERIFICATION_ERROR",
+          "OPERATION_FAILED"
+        ]
+      },
+      "CreateSimpleRequestContext": {
+        "title": "CreateSimpleRequestContext",
+        "type": "object",
+        "properties": {
+          "pins": {
+            "minLength": 1,
+            "type": "string",
+            "description": "Список пинов для опрделения депонента"
+          },
+          "fullName": {
+            "type": "string",
+            "description": "ФИО депонента"
+          },
+          "phoneNumber": {
+            "pattern": "^(\\+7|8)\\d{10,11}$",
+            "type": "string",
+            "description": "Телефон депонента"
+          },
+          "birthDate": {
+            "type": "string",
+            "description": "ДР депонента",
+            "format": "date"
+          },
+          "passport": {
+            "pattern": "^(\\d{4}\\s\\d{6}|\\d{2}\\s\\d{7})$",
+            "type": "string",
+            "description": "ДУЛ депонента"
+          },
+          "passportIssuedDate": {
+            "type": "string",
+            "description": "дата ДУЛа",
+            "format": "date"
+          },
+          "developerCus": {
+            "$ref": "#/components/schemas/Cus"
+          },
+          "eqReference": {
+            "maxLength": 16,
+            "minLength": 16,
+            "type": "string",
+            "description": "Id заявки в eq",
+            "example": "EA12109210000012"
+          }
+        }
+      },
+      "ErrorInfo_details": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Тип дополнительной информации"
+          },
+          "attributes": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Атрибуты дополнительной информации об ошибке"
+          }
+        },
+        "example": null
+      },
+      "ErrorInfo_meta": {
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "integer",
+            "description": "Версия схемы ошибки"
+          },
+          "traceId": {
+            "type": "string",
+            "description": "Идентификатор запроса, приведшего к ошибке"
+          }
+        },
+        "example": null
+      },
+      "Amount_currency": {
+        "type": "object",
+        "properties": {
+          "mnemonicCode": {
+            "type": "string",
+            "description": "3 символа currency code согласно ISO-4217",
+            "format": "iso-4217",
+            "example": "EUR"
+          },
+          "minorUnits": {
+            "type": "integer",
+            "description": "Степень числа 10 для нахождения смещения копеек для конкретной валююты"
+          }
+        },
+        "example": null
+      },
+      "EscrowOrderFilter_period": {
+        "type": "object",
+        "properties": {
+          "from": {
+            "type": "string",
+            "format": "date"
+          },
+          "to": {
+            "type": "string",
+            "format": "date"
+          }
+        },
+        "description": "Фильтр по периоду",
+        "example": null
+      }
+    },
+    "responses": {
+      "BadRequest": {
+        "description": "Неверные входные параметры запроса",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorInfo"
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Ресурс не найден",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorInfo"
+            }
+          }
+        }
+      },
+      "Forbidden": {
+        "description": "Доступ запрещен",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorInfo"
+            }
+          }
+        }
+      },
+      "InternalError": {
+        "description": "Внутренняя ошибка сервиса",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorInfo"
+            }
+          }
+        }
+      },
+      "GatewayTimeout": {
+        "description": "Таймаут при обращении к нижележащему сервису",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorInfo"
+            }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "userId": {
+        "name": "A-userId",
+        "in": "header",
+        "description": "Идентификатор инициатора запроса (УЛ)",
+        "required": true,
+        "style": "simple",
+        "explode": false,
+        "schema": {
+          "pattern": "^(.{6}|.{9})$",
+          "type": "string",
+          "nullable": false
+        },
+        "example": "XAAAAA"
+      },
+      "customerId": {
+        "name": "A-customerId",
+        "in": "header",
+        "description": "Идентификатор клиента инициатора запроса (УЛ)",
+        "required": true,
+        "style": "simple",
+        "explode": false,
+        "schema": {
+          "pattern": "^(.{6}|.{9})$",
+          "type": "string",
+          "nullable": false
+        },
+        "example": "UAAAAA"
+      }
+    }
+  }
+}
